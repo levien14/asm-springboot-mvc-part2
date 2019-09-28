@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head></head>
+<body>
+
+<nav th:replace="layout :: header"></nav>
+
+<div class="container" id="main-content">
+    <div class="row">
+        <div class="col-6 no-padding">
+            <form class="form-inline" action="#" th:action="@{/contact/search}" method="get">
+                <input class="form-control mr-sm-2" type="search" name="term" placeholder="Search by name ..." />
+                <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-search"></i> Search
+                </button>
+            </form>
+        </div>
+
+        <div class="col-6 no-padding">
+            <a href="#" th:href="@{/contact/add}" class="btn btn-success float-right">
+                <i class="fa fa-plus-square"></i> New aptech class
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+
+        <th:block th:if="${#lists.isEmpty(aptechs)}">
+            <h5>No Aptech Class</h5>
+        </th:block>
+        <!--<div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">-->
+            <!--<span th:text="${successMessage}"></span>-->
+            <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+                <!--<span aria-hidden="true">&times;</span>-->
+            <!--</button>-->
+        <!--</div>-->
+
+        <th:block th:unless="${#lists.isEmpty(aptechs)}">
+            <div class="table-responsive">
+                <h5>List of Aptechs</h5>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>id</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="aptech,iterStat : ${aptechs}">
+                        <th scope="row" th:text="${iterStat.count}"></th>
+                        <td th:text="${aptech.id}"></td>
+                        <td th:text="${aptech.name}"></td>
+                        <td>
+                            <a href="#" th:href="@{/aptech/{id}(id=${aptech.id})}" class="text-danger">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </th:block>
+    </div>
+</div><!-- /.container -->
+
+<footer th:replace="layout :: footer"></footer>
+
+</body>
+</html>

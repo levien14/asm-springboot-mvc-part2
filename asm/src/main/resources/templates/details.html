@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+
+<div class="container" id="main-content">
+    <form th:action="@{/aptech}" th:object="${aptech}" method="post">
+    <div class="row mt-4">
+        <input type="text" th:value="${aptech.id}" th:field="*{id}" disabled>
+        <input type="text" th:value="${aptech.name}" th:field="*{name}" disabled>
+
+    </div>
+    <div class="row mt-4">
+
+        <th:block th:if="${#lists.isEmpty(students)}">
+            <h5></h5>
+        </th:block>
+
+        <th:block th:unless="${#lists.isEmpty(studentsaptech)}">
+            <div class="table-responsive">
+                <h5>Student of Aptech</h5>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>RollNumber</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="student,iterStat : ${studentsaptech}">
+                        <th scope="row" th:text="${iterStat.count}"></th>
+                        <td th:text="${student.rollNumber}"></td>
+                        <td th:text="${student.name}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </th:block>
+
+        <th:block th:unless="${#lists.isEmpty(students)}">
+            <div class="table-responsive">
+                <h5>Add Student</h5>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="student,iterStat : ${students}">
+                        <th scope="row" th:text="${iterStat.count}"></th>
+                        <td th:text="${student.name}"></td>
+                        <td>
+                            <input type="checkbox" name="studentid" th:value="${student.rollNumber}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-block btn-primary">
+                    <i class="fa fa-save"></i> Add Student in Aptech class
+                </button>
+            </div>
+        </th:block>
+    </div>
+
+    </form>
+</div>
+
+
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

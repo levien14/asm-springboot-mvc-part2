@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head></head>
+<body>
+
+<th:block th:unless="${#lists.isEmpty(students)}">
+    <form th:action="@{/testcheckbox}" method="post">
+    <div class="table-responsive">
+        <h5>List of Aptechs</h5>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>id</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="aptech,iterStat : ${students}">
+                <th scope="row" th:text="${iterStat.count}"></th>
+                <td th:text="${aptech.id}"></td>
+                <td th:text="${aptech.name}"></td>
+                <td>
+                    <input type="checkbox"  name="listid" th:value="${aptech.id}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <button type="submit" class="btn btn-block btn-primary">
+            <i class="fa fa-save"></i> Save
+        </button>
+    </form>
+</th:block>
+
+</body>
+</html>
